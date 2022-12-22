@@ -19,7 +19,7 @@ export class Event {
         let str = new StringHelper(value)
         let str_n = new U32()
         let err = eventHttpWrite(this.eventNum, str.Ptr(), str.Len(), str_n.ptr)
-        if (err != 0) {
+        if (err != 1) {
             throw new Error("Error writing to event: " + err.toString())
         }
 
