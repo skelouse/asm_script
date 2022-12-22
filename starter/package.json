@@ -1,0 +1,31 @@
+{
+  "name": "starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests",
+    "test:mv": "cp build/release.wasm ${_TAUREPOS}/monkey/fixtures/compile/assets/release.wasm",
+    "test:go": "cd ${_TAUREPOS}/monkey/fixtures/compile && go test -v --run TestWasmFunction && cd -",
+    "test:monkey": "npm run build && npm run test:mv && npm run test:go",
+    "build": "asc assembly/index.ts -o build/release.wasm --config ./node_modules/@assemblyscript/wasi-shim/asconfig.json --runtime minimal",
+    "asbuild:debug": "asc assembly/index.ts --target debug",
+    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release",
+    "start": "npx serve ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@assemblyscript/wasi-shim": "^0.1.0",
+    "assemblyscript": "^0.25.1",
+    "typescript": "^4.9.4"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  }
+}
