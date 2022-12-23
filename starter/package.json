@@ -21,6 +21,9 @@
     "assemblyscript": "^0.25.1",
     "typescript": "^4.9.4"
   },
+  "dependencies": {
+    "sdk": "file:../../../A-DL/as-sdk"
+  },
   "type": "module",
   "exports": {
     ".": {

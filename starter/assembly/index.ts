@@ -1,21 +1,19 @@
-import { event } from "./sdk/event/index";
-import { U32, StringHelper } from "./sdk/helpers";
+import { Event } from "sdk/event";
 
-export function doStuff(e: event): u32 {
-  try {
-    e.Http().Write("hello, world!");
-  } catch (e) {
-    if (typeof e === "string") {
-      console.log(e.toString());
-    } else if (e instanceof Error) {
-      console.log(e.message.toString()); // works, `e` narrowed to Error
-    }
+export function doStuff(e: Event): u32 {
+  let httpEvent = e.http();
+  console.log(e.toString());
+  if (httpEvent == null) {
+    return 1;
   }
 
-  // let str = new StringHelper("Hello, world!")
-  // let str_n = new U32()
-  // eventHttpWrite(e.eventNum, str.Ptr(), str.Len(), str_n.ptr)
-  // str_n.log()
+  let resp = httpEvent.unwrap().write("Hello, world!");
+  if (resp.err) {
+    console.log(resp.err);
+    return 1;
+  }
+
+  console.log(resp.unwrap().toString());
 
   return 0;
 }
